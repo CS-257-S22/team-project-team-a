@@ -1,0 +1,72 @@
+<html lang="en"> 
+    <head>
+        <title>Find School</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/universal.css') }}">
+        <script>      
+          window.onload = (event) => {
+              document.querySelector('#enrollment').value = {{enrollment|tojson}};
+              document.querySelector('#charter').value = {{charter|tojson}};
+              document.querySelector('#grade').value = {{grade|tojson}};
+          };
+        </script>
+    </head>
+    
+    <body>
+    <div class="header nav">
+      <span><a class="logo_text" href="/"> MN Schools COVID19 Data </a></span>
+      <span class = "headerNav">
+          <a href="/search"><button class="navButton">Use smart search</button></a>
+          <a href="/list/districts"><button class="navButton" >See all districts</button></a>
+          <a href="/list/schools"><button class="navButton">See all schools</button></a>
+      </span>
+    </div>
+      <section class="school_filters_and_resulting_schools container column_view">
+        <article class="school_filters">
+          <form action="/list/schools">
+            <label for="enrollment">Enrollment</label>
+            <select name="enrollment" id="enrollment">
+              <option value="0 AND 100000">--Select--</option>
+              <option value="0 AND 99">0-99</option>
+              <option value="100 AND 999">100-999</option>
+              <option value="1000 AND 100000">1000-Inf</option>
+            </select>
+    
+            <label for="charter">Charter</label>
+            <select name="charter" id="charter">
+              <option value="'Yes', 'No'">--Select--</option>
+              <option value="'Yes'">Charter</option>
+              <option value="'No'">Regular</option>
+            </select>
+    
+            <label for="grade">Grades</label>
+            <select name="grade" id="grade">
+              <option value="-1">--Select--</option>
+              <option value="0">K</option>
+              <option value="1">Grade 1</option>
+              <option value="2">Grade 2</option>
+              <option value="3">Grade 3</option>
+              <option value="4">Grade 4</option>
+              <option value="5">Grade 5</option>
+              <option value="6">Grade 6</option>
+              <option value="7">Grade 7</option>
+              <option value="8">Grade 8</option>
+              <option value="9">Grade 9</option>
+              <option value="10">Grade 10</option>
+              <option value="11">Grade 11</option>
+              <option value="12">Grade 12</option>
+            </select>
+            
+            <input type="submit" value="Submit" />
+          </form>  
+        </article>
+
+        <article class="resulting_schools">
+          <ul>
+            {%for school in schools%}
+            <li><a href ="{{'/school/'+school[0]}}">{{ school[0] }}</a></li>
+            {%endfor%}
+          </ul>
+        </article>
+      </section>
+    </body>
+</html>

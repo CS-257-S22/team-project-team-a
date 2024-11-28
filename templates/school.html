@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!--
+Datafile for individual schools
+Written by Roo Case and Artem Yushko
+-->
+
+<head>
+  <title>School Data</title>
+  <!-- Connecting the file to Flask -->
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/universal.css') }}">
+  <!-- Thanks to Artem and this stackoverflow article for helping me figure this out: https://stackoverflow.com/questions/22259847/application-not-picking-up-css-file-flask-python -->
+</head>
+
+<body>
+  <div class="header nav">
+    <span><a class="logo_text" href="/"> MN Schools COVID19 Data </a></span>
+    <span class = "headerNav">
+      <a href="/search"><button class="navButton">Use smart search</button></a>
+      <a href="/list/districts"><button class="navButton" >See all districts</button></a>
+      <a href="/list/schools"><button class="navButton">See all schools</button></a>
+    </span>
+  </div>
+
+  <div class="Highlight" style="margin-bottom: 5em">
+    <ul>
+      <li>Data source: <a href="https://www.covidschooldatahub.com/for_researchers"> COVID-19 School Data Hub, School Learning Model Database </a></li>
+      <li>Date downloaded - 04/05/2022</li>
+    </ul>
+  </div>
+
+  <div class="block" style="text-align:center">
+    <h2 style="font-size:50px">{{school[1]}}</h2>
+    <h2>Enrollment: {{school[4]}} students</h2>
+    <h2>District: <a href ="{{'/district/'+school[3]}}")>{{school[3]}}</a></h2>
+    <h2>School Type: {{school[2]}}</h2>
+    <h2>Is it a charter school?: {{school[0]}}</h2>
+  </div>
+
+  <div class="See CovidData" style="font-size:25px">
+    <table>
+      <tr>
+        <th>Time Period</th>
+        {% for i in available_grades %}
+          {% if i == 0 %}
+            <th>K</th>
+          {% else %} 
+            <th>Grade {{i}}</th>
+          {% endif %}
+        {% endfor %}
+      </tr>
+      
+      {% for week in weekly_table %}
+      <tr>
+        <td>{{week[1]}}</td>
+
+        {% for i in available_grades %}
+          <td>{{week[i+2]}}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+
+
+</body>
+</html>
